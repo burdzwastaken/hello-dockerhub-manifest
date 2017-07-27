@@ -1,0 +1,16 @@
+piVersion: apps/v1beta1
+kind: Deployment
+metadata:
+  name: dockerhub
+spec:
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: dockerhub
+    spec:
+      containers:
+      - name: dockerhub
+        image: burdz/dockerhub:latest
+        ports:
+        - containerPort: 8080
