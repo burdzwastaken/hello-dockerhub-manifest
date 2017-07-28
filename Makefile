@@ -8,10 +8,6 @@ TAG           := dev
 GOPATH := $(shell pwd)/
 export GOPATH
 
-.PHONY: get
-get:
-	go get -d github.com/gorilla/websocket
-
 .PHONY: fmt
 fmt:
 	go fmt ./...
@@ -20,7 +16,7 @@ fmt:
 build:
 	docker build . -t ${PROJECT}:${TAG}
 
-.PHONY: push-dev
+.PHONY: push
 push-dev:
 	docker push -t ${PROJECT}:${TAG}
 
