@@ -3,12 +3,12 @@
 # Declare variables to be passed into your templates.
 replicaCount: 1
 image:
-  repository: burdz/dockerhub
+  repository: burdz/hello-dockerhub-manifest
   tag: dev
   pullPolicy: Always
 service:
-  name: dockerhub
-  type: ClusterIP
+  name: hello-dockerhub-manifest
+  type: NodePort
   externalPort: 8080
   internalPort: 8080
 resources:

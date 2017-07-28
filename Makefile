@@ -1,4 +1,4 @@
-GOPATH := $(shell pwd)/vendor/
+GOPATH := $(shell pwd)/
 export GOPATH
 
 PROJECT=burdz/hello-dockerhub-manifest
@@ -19,3 +19,10 @@ push-dev:
 
 godep:
 	godep save ./...
+
+.PHONY: helm-package
+helm-package:
+	helm package --version 0.1.0 deploy/hello-dockerhub-manifest
+
+helm-deploy:
+	helm install hello-dockerhub-manifest-0.1.0.tgz
