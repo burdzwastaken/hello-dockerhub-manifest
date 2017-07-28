@@ -34,4 +34,4 @@ helm-package:
 
 .PHONY: helm-deploy
 helm-deploy:
-	helm install hello-dockerhub-manifest-${VERSION}.tgz
+	helm install ${DISTNAME}-${VERSION}.tgz
