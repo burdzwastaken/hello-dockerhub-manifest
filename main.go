@@ -75,6 +75,35 @@ func authToken(image string) string {
 	return response.Token
 }
 
+func getManifest(msg []byte) []byte {
+	imageString := string(msg)
+	imageMap := strings.Split(imageString, ":")
+
+	image := imageMap[0]
+	tag := imageMap[1]
+
+	token := authToken(image)
+
+	req, err := http.NewRequest("GET", url+"v2/"+image+"/manifests/"+tag, nil)
+	if err != nil {
+		log.Fatal("NewRequest: ", err)
+	}
+	req.Header.Set("Accept", "application/vnd.docker.distribution.manifest.list.v2+json")
+	req.Header.Set("Authorization", "Bearer "+token)
+
+	client := &http.Client{}
+	resp, err := client.Do(req)
+	if err != nil {
+		log.Fatal("NewRequest: ", err)
+	}
+
+	defer resp.Body.Close()
+
+	body, err := ioutil.ReadAll(resp.Body)
+
+	return body
+}
+
 func main() {
 
 	http.HandleFunc("/search", func(w http.ResponseWriter, r *http.Request) {
@@ -87,30 +116,7 @@ func main() {
 
 			fmt.Printf("%s sent: %s\n", conn.RemoteAddr(), string(msg))
 
-			imageString := string(msg)
-			imageMap := strings.Split(imageString, ":")
-
-			image := imageMap[0]
-			tag := imageMap[1]
-
-			token := authToken(image)
-
-			req, err := http.NewRequest("GET", url+"v2/"+image+"/manifests/"+tag, nil)
-			if err != nil {
-				log.Fatal("NewRequest: ", err)
-			}
-			req.Header.Set("Accept", "application/vnd.docker.distribution.manifest.list.v2+json")
-			req.Header.Set("Authorization", "Bearer "+token)
-
-			client := &http.Client{}
-			resp, err := client.Do(req)
-			if err != nil {
-				log.Fatal("NewRequest: ", err)
-			}
-
-			defer resp.Body.Close()
-
-			body, err := ioutil.ReadAll(resp.Body)
+			body := getManifest(msg)
 
 			if err = conn.WriteMessage(msgType, body); err != nil {
 				return

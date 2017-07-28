@@ -11,6 +11,6 @@ spec:
     spec:
       containers:
       - name: dockerhub
-        image: burdz/dockerhub:latest
+        image: burdz/dockerhub:dev
         ports:
         - containerPort: 8080
