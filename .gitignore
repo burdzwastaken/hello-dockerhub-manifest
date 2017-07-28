@@ -16,3 +16,6 @@ vendor
 
 # helm
 hello-dockerhub-manifest-*.tgz
+
+# golang src
+src
