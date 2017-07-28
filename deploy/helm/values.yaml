@@ -4,7 +4,7 @@
 replicaCount: 1
 image:
   repository: burdz/dockerhub
-  tag: latest
+  tag: dev
   pullPolicy: Always
 service:
   name: dockerhub
