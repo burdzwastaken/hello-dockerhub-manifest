@@ -1,16 +1,16 @@
 piVersion: apps/v1beta1
 kind: Deployment
 metadata:
-  name: dockerhub
+  name: hello-dockerhub-manifest
 spec:
   replicas: 1
   template:
     metadata:
       labels:
-        app: dockerhub
+        app: hello-dockerhub-manifest
     spec:
       containers:
-      - name: dockerhub
-        image: burdz/dockerhub:dev
+      - name: hello-dockerhub-manifest
+        image: burdz/hello-dockerhub-manifest:dev
         ports:
         - containerPort: 8080
