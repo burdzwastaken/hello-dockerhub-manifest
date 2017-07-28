@@ -9,7 +9,6 @@ FROM alpine
 RUN apk update && apk add ca-certificates
 COPY --from=build-env src/bin/hello-dockerhub-manifest /app/
 COPY ./websockets.html /app/
-RUN ls /app/
 EXPOSE 8080
 WORKDIR /app/
 ENTRYPOINT ./hello-dockerhub-manifest
