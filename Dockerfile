@@ -13,4 +13,4 @@ EXPOSE 8080
 WORKDIR /app/
 ENTRYPOINT ./hello-dockerhub-manifest
 
-MAINTAINER Matt Burdan <burdz@burdz.net>
+LABEL maintainer "Matt Burdan <burdz@burdz.net>"
