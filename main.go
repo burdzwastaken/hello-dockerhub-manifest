@@ -64,7 +64,11 @@ func authToken(image string) string {
 		log.Fatal("NewRequest: ", err)
 	}
 
-	defer respAuth.Body.Close()
+	defer func() {
+		if cerr := respAuth.Body.Close(); cerr != nil && err == nil {
+			err = cerr
+		}
+	}()
 
 	var response authResponse
 
@@ -97,9 +101,16 @@ func getManifest(msg []byte) []byte {
 		log.Fatal("NewRequest: ", err)
 	}
 
-	defer resp.Body.Close()
+	defer func() {
+		if cerr := resp.Body.Close(); cerr != nil && err == nil {
+			err = cerr
+		}
+	}()
 
 	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatal(err)
+	}
 
 	return body
 }
@@ -128,6 +139,6 @@ func main() {
 		http.ServeFile(w, r, "websockets.html")
 	})
 
-	http.ListenAndServe(port, nil)
+	log.Fatal(http.ListenAndServe(port, nil))
 
 }
